@@ -1,23 +1,19 @@
-pipeline {
+pipeline{
     agent any
-
     stages {
-
-        stage('Clone Repo') {
+        stage('source code') {
             steps {
-                git branch: 'main', url: 'https://github.com/ShaliniGR05/Terraform001'
+                echo 'Cloning...'
+                   git branch: 'main', url: 'https://github.com/ShaliniGR05/Terraform001'
+
             }
         }
-
-        stage('Terraform Init') {
+        stage('terraform') {
             steps {
+                echo 'Deploying...'
                 sh 'terraform init'
-            }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                sh 'terraform apply -auto-approve'
+                sh 'terraform plan -var="ami=ami-0b6c6ebed2801a5cb" '
+                sh 'terraform apply -var="ami=ami-0b6c6ebed2801a5cb" -auto-approve'
             }
         }
     }
