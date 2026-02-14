@@ -1,23 +1,16 @@
-pipeline {
+pipeline{
     agent any
     stages {
-
         stage('source code') {
             steps {
                 git branch: 'main', url: 'https://github.com/ShaliniGR05/Terraform001'
             }
         }
-
         stage('terraform') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
-                ]]) {
-                    sh 'terraform init'
-                    sh 'terraform plan -var="ami_id=ami-0b6c6ebed2801a5cb"'
-                    sh 'terraform apply -var="ami_id=ami-0b6c6ebed2801a5cb" -auto-approve'
-                }
+                sh 'terraform init'
+                sh 'terraform plan -var="ami_id=ami-0b6c6ebed2801a5cb"'
+                sh 'terraform apply -var="ami_id=ami-0b6c6ebed2801a5cb" -auto-approve'
             }
         }
     }
