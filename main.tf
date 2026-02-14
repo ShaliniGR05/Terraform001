@@ -10,8 +10,11 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region     = "us-east-1"
+  access_key = "AKIAUM6UB2HX26BNT3EP"
+  secret_key = "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"
 }
+
 data "aws_vpc" "default" {
   default = true
 }
